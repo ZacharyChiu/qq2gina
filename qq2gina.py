@@ -52,7 +52,7 @@ def get_msg():
     logs = os.listdir('logs')
     today_log = str(datetime.datetime.now()).split(' ')[0]+'.log'
     if today_log in logs:
-        with open('logs\\'+today_log,'r',encoding='utf-8') as f:
+        with open('logs/'+today_log,'r',encoding='utf-8') as f:
             log = f.read()
         sd = re.findall(r'发送.*的消息.*.*',log)
         rcv = re.findall(r'收到.*的消息.*.*',log)
@@ -139,7 +139,7 @@ while 1:
                         
                     else:
                         print('>>>捕获到【普通对话】！')
-                        name = 'tts_logs\\'+str(get_time()) + '.mp3'
+                        name = 'tts_logs/'+str(get_time()) + '.mp3'
                         ans = chatme.chat(' '.join(content[-1].split(' ')[:-1]))
                         # ans = '...'
                         print('$ 姬娜:', ans, '\n')
