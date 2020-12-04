@@ -86,6 +86,14 @@ def what(text):
     return [name,id_,msg]
 # resp = sd_p_msg(1563382991,"Zac")
 # rsp = sd_msg(1039564640,"here")
+
+def readed(s):
+    with open('readed.txt','r',encoding='utf-8') as f:
+        readed = f.read()
+    if readed == s:
+        return True
+    else:
+        return False
 rcv_msg = []
 rcv = get_msg()[0]
 # for i in rcv:
@@ -97,8 +105,12 @@ rcv = get_msg()[0]
     # content = what(latest)
     # print(content)
     # print('#%s#'%' '.join(content[-1].split(' ')[:-1]))
+
+# os.system('start go-cqhttp-v0.9.32-windows-amd64.exe')
+
 while 1:
     if rcv != rcv_msg: # 有新消息
+        
         rcv_msg = rcv[:]
         latest = rcv_msg[-1]
         content = what(latest)
@@ -106,37 +118,44 @@ while 1:
             # 个人消息
             print('#%s#'%' '.join(content[-1].split(' ')[:-1]))
             print('='*20)
-            if content[1] == '1563382991':
-                # 来自Zac
-                if content[-1][:4] == 'gg$ ':
-                    order = ' '.join(content[-1].split('gg$ ')[-1].split(' ')[:-1])
-                    print('控制台：%s'%order)
-                    if order[:4] == 'sys ':
-                        os.system(order.split('sys ')[-1])
+            if not readed(content[-1]):
+                if content[1] == '1563382991':
+                    # 来自Zac
+                    if content[-1][:4] == 'gg$ ':
+                        order = ' '.join(content[-1].split('gg$ ')[-1].split(' ')[:-1])
+                        print('控制台：%s'%order)
+                        if order[:4] == 'sys ':
+                            os.system(order.split('sys ')[-1])
+                        else:
+                            print('>>>获到超哥的【命令行】！')
+                            r = gfun_air.do(order)
+                            print('$ 姬娜:', r, '\n')
+                            sd_p_msg(1563382991,r)
+                            with open('readed.txt','w',encoding='utf-8') as f:
+                                f.write(content[-1])
+                            
+                    elif content[-1][:4] == '[CQ:':
+                        print('>>>捕获到【CQ码】！')
+                        
                     else:
-                        print('>>>获到超哥的【命令行】！')
-                        r = gfun_air.do(order)
-                        print('$ 姬娜:', r, '\n')
-                        sd_p_msg(1563382991,r)
-                elif content[-1][:4] == '[CQ:':
-                    print('>>>捕获到【CQ码】！')
-                    
-                else:
-                    print('>>>捕获到【普通对话】！')
-                    name = 'tts_logs\\'+str(get_time()) + '.mp3'
-                    ans = chatme.chat(' '.join(content[-1].split(' ')[:-1]))
-                    # ans = '...'
-                    print('$ 姬娜:', ans, '\n')
-                    sd_p_msg(1563382991,ans)
-                    # h = have_speech(ans)
-                    # if h:
-                        # play_music('tts_logs\\'+h+'.mp3',16000)
-                    # else:
-                        # tts.readit(ans,name)
-                        # play_music(name,16000)
-                        # with open('tts_recoder.csv','a',encoding='utf-8') as f:
-                            # writer = csv.writer(f)
-                            # writer.writerow([name.split('\\')[-1].split('.')[0],ans])
+                        print('>>>捕获到【普通对话】！')
+                        name = 'tts_logs\\'+str(get_time()) + '.mp3'
+                        ans = chatme.chat(' '.join(content[-1].split(' ')[:-1]))
+                        # ans = '...'
+                        print('$ 姬娜:', ans, '\n')
+                        sd_p_msg(1563382991,ans)
+                        with open('readed.txt','w',encoding='utf-8') as f:
+                            f.write(content[-1])
+                        
+                        # h = have_speech(ans)
+                        # if h:
+                            # play_music('tts_logs\\'+h+'.mp3',16000)
+                        # else:
+                            # tts.readit(ans,name)
+                            # play_music(name,16000)
+                            # with open('tts_recoder.csv','a',encoding='utf-8') as f:
+                                # writer = csv.writer(f)
+                                # writer.writerow([name.split('\\')[-1].split('.')[0],ans])
         else:
             #群消息
             print(content)
@@ -145,9 +164,13 @@ while 1:
             qunname = qun.split('(')[0]  # 群名
             qunnum = qun.split('(')[-1].split(')')[0]  # 群号
             saynum = content[1]  # 发言人
-            ans = chatme.chat(' '.join(content[-1].split(' ')[:-1]))
-            sd_g_msg(qunnum,ans)
             
-            # print(sayman)
-            print('$ 姬娜:', ans, '\n')
+            if not readed(content[-1]):
+                ans = chatme.chat(' '.join(content[-1].split(' ')[:-1]))
+                sd_g_msg(qunnum,ans)
+                with open('readed.txt','w',encoding='utf-8') as f:
+                    f.write(content[-1])
+                # print(sayman)
+                print('$ 姬娜:', ans, '\n')
+    
     rcv = get_msg()[0]
