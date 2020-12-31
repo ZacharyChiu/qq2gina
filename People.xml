@@ -1,0 +1,92 @@
+<people>
+<readme>
+# 
+relation = {
+	'parent':'父母、创造者。根据目标的性别来判定是父还是母。',
+	'child':'孩子、创造物。',
+	'friend':'朋友',
+	'':'',
+	}
+</readme>
+
+<trans>
+{'male':'男', 'female':'女',
+	'parent':{'male':'爸爸', 'female':'妈妈'},
+	'child':{'male':'儿子', 'female':'女儿'},
+	'friend':'朋友',
+	}
+</trans>
+
+<p id=0>
+{'name':['姬娜','Gina','小姬姬'],
+	'id':0,
+	'auth':0.9999,
+	'gender':'female',
+	'birth':'2019',
+	'place':{'home':'','live':'','at':''},
+	'body':{'height':170,'weight':50},
+	'relation':{'parent':1}
+	}
+</p>
+
+<p id=1>
+{'name':['赵超宇','Zachary Chiu','Zac'],
+	'id':1,
+	'auth':1,
+	'gender':'male',
+	'birth':'1996.10.11',
+	'place':{'home':'宜兴','live':'宜兴','at':'宜兴'},
+	'body':{'height':160,'weight':45},
+	'relation':{'child':0,'friend':[10,11,12]}
+	}
+</p>
+
+<p id=10>
+{'name':['钱伟','William Chien'],
+	'id':10,
+	'auth':0.6,
+	'gender':'male',
+	'birth':'1998',
+	'place':{'home':'响水','live':'和桥','at':'金华'},
+	'body':{'height':170,'weight':55},
+	'relation':{'friend':[1,11,12]}
+	}
+</p>
+
+<p id=11>
+{'name':['蒋悦','Joy'],
+	'id':11,
+	'auth':0.6,
+	'gender':'male',
+	'birth':'1997',
+	'place':{'home':'和桥','live':'和桥','at':''},
+	'body':{'height':180,'weight':85},
+	'relation':{'friend':[10,1,12]}
+	}
+</p>
+
+<p id=12>
+{'name':['徐源','Young Hsu'],
+	'id':12,
+	'auth':0.6,
+	'gender':'male',
+	'birth':'1997',
+	'place':{'home':'和桥','live':'和桥','at':'和桥'},
+	'body':{'height':172,'weight':75},
+	'relation':{'friend':[10,11,1]}
+	}
+</p>
+
+<exp>
+{'name':[$ name1 , name2 , ... $],
+	'id':'$ numbers $',
+	'auth':$ 0~1 $,
+	'gender':$ male / female / bisexual / unknown $,
+	'birth':'2000.1.1',
+	'place':{'home':'','live':'','at':''},
+	'body':{'height':$ ??cm $,'weight':$ ??kg $},,
+	'relation':{id:关系}
+	}
+</exp>
+
+</people>
